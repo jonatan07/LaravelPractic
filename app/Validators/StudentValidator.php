@@ -15,7 +15,7 @@ class StudentValidator
         ];
         $validator = Validator::make($request->all(),[
             'name' => 'required',
-            'email' => 'required | email:unique',
+            'email' => 'required|email',
             'lastName' => 'required',
             'phone' => 'required',
         ]);

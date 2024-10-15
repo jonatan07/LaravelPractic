@@ -176,24 +176,24 @@
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "Laptop"
+                                        "example": "Clever"
                                     },
                                     "lastName": {
                                         "type": "string",
-                                        "example": 1
+                                        "example": "SantaMar"
                                     },
                                     "email": {
                                         "type": "string",
                                         "format": "float",
-                                        "example": 1200.5
+                                        "example": "Test@gmail.com"
                                     },
                                     "phone": {
                                         "type": "string",
-                                        "example": "Descripción opcional del producto"
+                                        "example": "809-923-1234"
                                     },
                                     "address": {
                                         "type": "string",
-                                        "example": "Descripción opcional del producto"
+                                        "example": "Algun lugar del planeta"
                                     }
                                 },
                                 "type": "object"

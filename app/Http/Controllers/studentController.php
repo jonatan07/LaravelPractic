@@ -113,11 +113,11 @@ class studentController extends Controller
      *         description="Datos necesarios para crear un estudiante",
      *         @OA\JsonContent(
      *             required={"name", "lastName","email","phone","address"},
-     *             @OA\Property(property="name", type="string", example="Laptop"),
-     *             @OA\Property(property="lastName", type="string", example=1),
-     *             @OA\Property(property="email", type="string", format="float", example=1200.50),
-     *             @OA\Property(property="phone", type="string", example="Descripción opcional del producto"),
-     *             @OA\Property(property="address", type="string", example="Descripción opcional del producto")
+     *             @OA\Property(property="name", type="string", example="Clever"),
+     *             @OA\Property(property="lastName", type="string", example="SantaMar"),
+     *             @OA\Property(property="email", type="string", format="float", example="Test@gmail.com"),
+     *             @OA\Property(property="phone", type="string", example="809-923-1234"),
+     *             @OA\Property(property="address", type="string", example="Algun lugar del planeta")
      *         )
      *     ),
      *     @OA\Response(
@@ -135,7 +135,7 @@ class studentController extends Controller
 
         $rule = StudentValidator::Valid($request);
         
-        if($rule['isValid'])
+        if(!$rule['isValid'])
         {
             $data = [
                 'error'=> $rule['error'],
@@ -253,6 +253,6 @@ class studentController extends Controller
             'student'=> $student,
             'status'=> 200
         ];
-    return response()->json($data, 200);
+        return response()->json($data, 200);
     }
 }
