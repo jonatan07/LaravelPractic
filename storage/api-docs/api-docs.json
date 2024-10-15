@@ -12,6 +12,28 @@
                 ],
                 "summary": "Obtener lista de estudiantes",
                 "operationId": "4cb7592bdfb79c0c5769ba329966e6f9",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "required": false
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Una lista de estudiantes"

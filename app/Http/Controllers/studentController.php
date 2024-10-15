@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Validators\StudentValidator;
 use Illuminate\Http\Request;
 
 /**
@@ -16,6 +17,26 @@ class studentController extends Controller
      *     path="/api/students",
      *     summary="Obtener lista de estudiantes",
      *     tags={"Estudiante"},
+     *     @OA\Parameter(
+     *         in="query",
+     *         name="name",
+     *         required=false
+     *      ),
+     *      @OA\Parameter(
+     *         in="query",
+     *         name="lastName",
+     *         required=false
+     *      ),
+     *      @OA\Parameter(
+     *         in="query",
+     *         name="email",
+     *         required=false
+     *      ),
+     *     @OA\Parameter(
+     *         in="query",
+     *         name="phone",
+     *         required=false
+     *      ),
      *     @OA\Response(
      *         response=200,
      *         description="Una lista de estudiantes"
@@ -27,9 +48,24 @@ class studentController extends Controller
      *  )
      */
 
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $students = Student::All();
+        $query = Student::query();
+        // Aplicar filtro.
+        if ($request->has('name')) {
+            $query->where('name', 'like', '%' . $request->get('name') . '%');
+        }
+        if ($request->has('lastName')) {
+            $query->where('lastName', 'like', '%' . $request->get('lastName') . '%');
+        }
+        if ($request->has('email')) {
+            $query->where('email', 'like', '%' . $request->get('email') . '%');
+        }
+        if ($request->has('phone')) {
+            $query->where('phone', 'like', '%' . $request->get('phone') . '%');
+        }
+        // Ejecutar la consulta y obtener los resultados
+        $students = $query->get();
         if($students->isEmpty())
         {
             return response()->json(['message'=>'No hay estudiantes'],404);
@@ -96,6 +132,18 @@ class studentController extends Controller
      */
     public function create(Request $request)
     {
+
+        $rule = StudentValidator::Valid($request);
+        
+        if($rule['isValid'])
+        {
+            $data = [
+                'error'=> $rule['error'],
+                'status'=> 422
+            ];
+            return response()->json($data,422);
+        }
+
         $student = Student::create([
             'name' => $request->name,
             'lastName'=> $request->lastName,
@@ -103,6 +151,7 @@ class studentController extends Controller
             'phone'=> $request->phone,
             'address'=> $request->address
         ]);
+
         if(!$student)
         {
             $data = [
@@ -111,11 +160,13 @@ class studentController extends Controller
             ];
             return response()->json($data,500);
         }
+
         $data = [
             'student'=> $student,
             'status'=> 201
         ];
-        return response($data,201);
+
+        return response()->json($data,201);
     }
     /**
      *   @OA\delete
