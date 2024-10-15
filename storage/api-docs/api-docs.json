@@ -1,0 +1,221 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Estudiantes",
+        "version": "2.0"
+    },
+    "paths": {
+        "/api/students": {
+            "get": {
+                "tags": [
+                    "Estudiante"
+                ],
+                "summary": "Obtener lista de estudiantes",
+                "operationId": "4cb7592bdfb79c0c5769ba329966e6f9",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Una lista de estudiantes"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/student/{id}": {
+            "get": {
+                "tags": [
+                    "Estudiante"
+                ],
+                "summary": "Obtener un estudiante",
+                "operationId": "8972508d04f6368aed9c7eb063b7e8a5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Una estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Estudiante"
+                ],
+                "summary": "actualizar un estudiante",
+                "operationId": "d21084172237831b112ba500de2a008d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos necesarios para actualizar un estudiante",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "lastName",
+                                    "email",
+                                    "phone",
+                                    "address"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Laptop"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": 1
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "float",
+                                        "example": 1200.5
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Una estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Estudiante"
+                ],
+                "summary": "eliminar un estudiante",
+                "operationId": "d9ad32db55685b31ec18860d19be152c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Una estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/student": {
+            "post": {
+                "tags": [
+                    "Estudiante"
+                ],
+                "summary": "crear un estudiante",
+                "operationId": "23c4e51891f68ba28aa49289200e64da",
+                "requestBody": {
+                    "description": "Datos necesarios para crear un estudiante",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "lastName",
+                                    "email",
+                                    "phone",
+                                    "address"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Laptop"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": 1
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "float",
+                                        "example": 1200.5
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Crea un estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Estudiante",
+            "description": "Estudiante"
+        }
+    ]
+}
