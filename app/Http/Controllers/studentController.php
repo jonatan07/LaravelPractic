@@ -50,22 +50,9 @@ class studentController extends Controller
 
     public function getAll(Request $request)
     {
-        $query = Student::query();
-        // Aplicar filtro.
-        if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->get('name') . '%');
-        }
-        if ($request->has('lastName')) {
-            $query->where('lastName', 'like', '%' . $request->get('lastName') . '%');
-        }
-        if ($request->has('email')) {
-            $query->where('email', 'like', '%' . $request->get('email') . '%');
-        }
-        if ($request->has('phone')) {
-            $query->where('phone', 'like', '%' . $request->get('phone') . '%');
-        }
-        // Ejecutar la consulta y obtener los resultados
-        $students = $query->get();
+
+        $students =Student::name($request->name)->lastName($request->lastName)->email($request->email)->phone($request->phone)->get();
+        
         if($students->isEmpty())
         {
             return response()->json(['message'=>'No hay estudiantes'],404);
