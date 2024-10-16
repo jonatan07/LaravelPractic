@@ -67,69 +67,6 @@
                     }
                 }
             },
-            "put": {
-                "tags": [
-                    "Estudiante"
-                ],
-                "summary": "actualizar un estudiante",
-                "operationId": "d21084172237831b112ba500de2a008d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "description": "Datos necesarios para actualizar un estudiante",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "lastName",
-                                    "email",
-                                    "phone",
-                                    "address"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "example": "Laptop"
-                                    },
-                                    "lastName": {
-                                        "type": "string",
-                                        "example": 1
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "float",
-                                        "example": 1200.5
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "Descripción opcional del producto"
-                                    },
-                                    "address": {
-                                        "type": "string",
-                                        "example": "Descripción opcional del producto"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Una estudiante"
-                    },
-                    "default": {
-                        "description": "Ha ocurrido un error"
-                    }
-                }
-            },
             "delete": {
                 "tags": [
                     "Estudiante"
@@ -204,6 +141,71 @@
                 "responses": {
                     "200": {
                         "description": "Crea un estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/student/{student}": {
+            "put": {
+                "tags": [
+                    "Estudiante"
+                ],
+                "summary": "actualizar un estudiante",
+                "operationId": "4e76895995dfd95904d622fbc73c7036",
+                "parameters": [
+                    {
+                        "name": "student",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos necesarios para actualizar un estudiante",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "lastName",
+                                    "email",
+                                    "phone",
+                                    "address"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Laptop"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": 1
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "float",
+                                        "example": 1200.5
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Una estudiante"
                     },
                     "default": {
                         "description": "Ha ocurrido un error"

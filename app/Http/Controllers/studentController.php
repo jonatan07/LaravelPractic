@@ -206,12 +206,12 @@ class studentController extends Controller
     /**
      *   @OA\put
      *     (
-     *     path="/api/student/{id}",
+     *     path="/api/student/{student}",
      *     summary="actualizar un estudiante",
      *     tags={"Estudiante"},
      *     @OA\Parameter(
      *         in="path",
-     *         name="id",
+     *         name="student",
      *         required=true
      *      ),
      *      @OA\RequestBody(
@@ -236,12 +236,12 @@ class studentController extends Controller
      *     )
      *  )
      */
-    public function update($id,Request $request)
+    public function update(Student $student,Request $request)
     {
-        $student = Student::find($id);
+        
         if(!$student)
         {
-            return response()->json(['message'=>'No se encuentra al estudiante'],404);
+            return response()->json(['No se encontro al estudiante']);
         }
         $student->name = $request->name;
         $student->lastName = $request->lastName;
