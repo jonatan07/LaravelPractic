@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 /**
  *  @OA\Info(title="API Estudiantes", version="2.0")
 */
-class studentController extends Controller
+class StudentController extends Controller
 {
     /**
      *   @OA\get
