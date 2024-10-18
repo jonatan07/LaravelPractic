@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class StudentClassroom extends Model
 {
@@ -12,23 +14,16 @@ class StudentClassroom extends Model
         'studentId',
         'classroomId',
     ];
-    public static function scopeName($query,$studentId)
-    {
-        if(!empty($studentId))
-        {
-            return $query->where('studentId', 'like', '%' . $studentId . '%');;
-        }
-    }
-    public function scopeLastName($query,$classroomId)
-    {
-        if(!empty($classroomId))
-        {
-            return $query->where('classroomId', 'like', '%' . $classroomId . '%');;
-        }
-    }
 
+    public function student(): HasOne
+    {
+        return $this->hasOne(Student::class);
+    }
+    public function classroom(): HasOne
+    {
+        return $this->hasOne(Classroom::class);
+    }
 }
-
 
 
 ?>
