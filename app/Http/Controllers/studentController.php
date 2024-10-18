@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Validators\StudentValidator;
 use Illuminate\Http\Request;
+ 
 
-/**
- *  @OA\Info(title="API Estudiantes", version="2.0")
-*/
 class StudentController extends Controller
 {
     /**
@@ -223,9 +221,10 @@ class StudentController extends Controller
      *     )
      *  )
      */
-    public function update(Student $student,Request $request)
+    public function update($id,Request $request)
     {
         
+        $student = Student::findOrFail($id);
         if(!$student)
         {
             return response()->json(['No se encontro al estudiante']);

@@ -1,17 +1,179 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API Estudiantes",
+        "title": "API Practica de laravel",
         "version": "2.0"
     },
     "paths": {
+        "/api/school": {
+            "get": {
+                "tags": [
+                    "Colegio"
+                ],
+                "summary": "Obtener lista de colegios",
+                "operationId": "e608966a75b1a16f53270325f3170292",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Una lista de profesores"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Colegio"
+                ],
+                "summary": "crear una escuela",
+                "operationId": "cabeadfa95539261d8c761d103c8fb43",
+                "requestBody": {
+                    "description": "Datos necesarios para crear una escuela",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Gregorio luperon"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Escuela publica"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Crea un estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/school/{id}": {
+            "get": {
+                "tags": [
+                    "Colegio"
+                ],
+                "summary": "Obtener un escuelas",
+                "operationId": "96b0fe3b79f8a2b8edf0c02608f9693b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Una estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Colegio"
+                ],
+                "summary": "actualizar una escuela",
+                "operationId": "b7c3412840c1344c2d122700074990e3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos necesarios para actualizar un estudiante",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Laptop"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Una estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Colegio"
+                ],
+                "summary": "eliminar un escuela",
+                "operationId": "dff80df27ee18470c168d00d8fcd4845",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Una Escuela"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
         "/api/students": {
             "get": {
                 "tags": [
                     "Estudiante"
                 ],
                 "summary": "Obtener lista de estudiantes",
-                "operationId": "4cb7592bdfb79c0c5769ba329966e6f9",
+                "operationId": "4618e29c551d12a832be0c4aead5f47c",
                 "parameters": [
                     {
                         "name": "name",
@@ -50,7 +212,7 @@
                     "Estudiante"
                 ],
                 "summary": "Obtener un estudiante",
-                "operationId": "8972508d04f6368aed9c7eb063b7e8a5",
+                "operationId": "834b7fb95f13081e492cf084dc9cfa19",
                 "parameters": [
                     {
                         "name": "id",
@@ -72,7 +234,7 @@
                     "Estudiante"
                 ],
                 "summary": "eliminar un estudiante",
-                "operationId": "d9ad32db55685b31ec18860d19be152c",
+                "operationId": "7d15c12d59c774e71b8c917637c7a6a2",
                 "parameters": [
                     {
                         "name": "id",
@@ -96,7 +258,7 @@
                     "Estudiante"
                 ],
                 "summary": "crear un estudiante",
-                "operationId": "23c4e51891f68ba28aa49289200e64da",
+                "operationId": "b47d1928ef06188e14585da40c9e8245",
                 "requestBody": {
                     "description": "Datos necesarios para crear un estudiante",
                     "required": true,
@@ -154,7 +316,7 @@
                     "Estudiante"
                 ],
                 "summary": "actualizar un estudiante",
-                "operationId": "4e76895995dfd95904d622fbc73c7036",
+                "operationId": "6d4ed6a193ab63fbb3f6d0324df83751",
                 "parameters": [
                     {
                         "name": "student",
@@ -215,6 +377,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Colegio",
+            "description": "Colegio"
+        },
         {
             "name": "Estudiante",
             "description": "Estudiante"

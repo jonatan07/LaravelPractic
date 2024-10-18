@@ -1,5 +1,5 @@
 <?php 
-
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +20,7 @@ class School extends Model
             return $query->where('name', 'like', '%' . $name . '%');;
         }
     }
-    public function scopeLastName($query,$description)
+    public function scopeDescription($query,$description)
     {
         if(!empty($description))
         {
