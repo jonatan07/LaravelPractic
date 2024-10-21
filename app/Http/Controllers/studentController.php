@@ -191,12 +191,12 @@ class StudentController extends Controller
     /**
      *   @OA\put
      *     (
-     *     path="/api/student/{student}",
+     *     path="/api/student/{id}",
      *     summary="actualizar un estudiante",
      *     tags={"Estudiante"},
      *     @OA\Parameter(
      *         in="path",
-     *         name="student",
+     *         name="id",
      *         required=true
      *      ),
      *      @OA\RequestBody(
@@ -221,7 +221,7 @@ class StudentController extends Controller
      *     )
      *  )
      */
-    public function update($id,Request $request)
+    public function update(Request $request,$id)
     {
         
         $student = Student::findOrFail($id);

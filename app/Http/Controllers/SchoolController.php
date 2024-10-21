@@ -199,7 +199,7 @@ class SchoolController extends Controller
       *     )
       *  )
       */
-     public function update($id,Request $request)
+     public function update(Request $request,$id)
      {
         
         $school = School::findOrFail($id);

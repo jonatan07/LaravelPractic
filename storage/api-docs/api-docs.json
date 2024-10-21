@@ -229,6 +229,69 @@
                     }
                 }
             },
+            "put": {
+                "tags": [
+                    "Estudiante"
+                ],
+                "summary": "actualizar un estudiante",
+                "operationId": "2871729e5d84df1c1bc33c536bbf337c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos necesarios para actualizar un estudiante",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "lastName",
+                                    "email",
+                                    "phone",
+                                    "address"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Laptop"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": 1
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "float",
+                                        "example": 1200.5
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Descripción opcional del producto"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Una estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
             "delete": {
                 "tags": [
                     "Estudiante"
@@ -310,54 +373,58 @@
                 }
             }
         },
-        "/api/student/{student}": {
-            "put": {
+        "/api/teacher": {
+            "get": {
                 "tags": [
-                    "Estudiante"
+                    "Profesor"
                 ],
-                "summary": "actualizar un estudiante",
-                "operationId": "6d4ed6a193ab63fbb3f6d0324df83751",
+                "summary": "Obtener lista de profesores",
+                "operationId": "11724500c723f6203a0dd605a6e458a8",
                 "parameters": [
                     {
-                        "name": "student",
-                        "in": "path",
-                        "required": true
+                        "name": "name",
+                        "in": "query",
+                        "required": false
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "required": false
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "description": "Una lista de profesores"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Profesor"
+                ],
+                "summary": "crear un profesor",
+                "operationId": "e10b12f0f4279b43cf381d4f14cdc249",
                 "requestBody": {
-                    "description": "Datos necesarios para actualizar un estudiante",
+                    "description": "Datos necesarios para crear un profesor",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
                                     "name",
-                                    "lastName",
-                                    "email",
-                                    "phone",
-                                    "address"
+                                    "lastName"
                                 ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "Laptop"
+                                        "example": "Gregorio luperon"
                                     },
                                     "lastName": {
                                         "type": "string",
-                                        "example": 1
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "float",
-                                        "example": 1200.5
-                                    },
-                                    "phone": {
-                                        "type": "string",
-                                        "example": "Descripción opcional del producto"
-                                    },
-                                    "address": {
-                                        "type": "string",
-                                        "example": "Descripción opcional del producto"
+                                        "example": "Bonaire Encarnacion"
                                     }
                                 },
                                 "type": "object"
@@ -367,7 +434,100 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Una estudiante"
+                        "description": "Crea un profesor"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/teacher/{id}": {
+            "get": {
+                "tags": [
+                    "Profesor"
+                ],
+                "summary": "Obtener un profesor",
+                "operationId": "c0859286cf622737ae5472567c20b138",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un profesor"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Profesor"
+                ],
+                "summary": "actualizar una profesor",
+                "operationId": "bc0a4dc01efdf593e402df77c96e5ca1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos necesarios para actualizar un profesor",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "lastName"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jose"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": "Encarnacion"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Un profesor"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Profesor"
+                ],
+                "summary": "eliminar un profesor",
+                "operationId": "eba7abb322134e0a4d89d2a6b2caa641",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un Profesor"
                     },
                     "default": {
                         "description": "Ha ocurrido un error"
@@ -384,6 +544,10 @@
         {
             "name": "Estudiante",
             "description": "Estudiante"
+        },
+        {
+            "name": "Profesor",
+            "description": "Profesor"
         }
     ]
 }
