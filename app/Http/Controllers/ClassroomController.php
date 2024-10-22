@@ -2,63 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Teacher;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class TeacherController extends Controller
+class ClassroomController extends Controller
 {
-    /**
-     *     @OA\get
-     *     (
-     *     path="/api/teacher",
-     *     summary="Obtener lista de profesores",
-     *     tags={"Profesor"},
-     *     @OA\Parameter(
-     *         in="query",
-     *         name="name",
-     *         required=false
-     *      ),
-     *      @OA\Parameter(
-     *         in="query",
-     *         name="description",
-     *         required=false
-     *      ),
-     *     
-     *     @OA\Response(
-     *         response=200,
-     *         description="Una lista de profesores"
-     *     ),
-     *     @OA\Response(
-     *         response="default",
-     *         description="Ha ocurrido un error"
-     *     )
-     *  )
-    */
-    public function getAll(Request $request)
-    {
-
-        $teacher =Teacher::name($request->name)->lastName($request->lastName)->get();
-        
-        if($teacher->isEmpty())
-        {
-            return response()->json(['message'=>'No hay profesores'],404);
-        }
-        return response()->json($teacher,200);
-    }
     /**
      *   @OA\get
      *     (
-     *     path="/api/teacher/{id}",
-     *     summary="Obtener un profesor",
-     *     tags={"Profesor"},
+     *     path="/api/classroom/{idSchool}",
+     *     summary="Obtener las aulas de las escuelas",
+     *     tags={"Aula"},
      *     @OA\Parameter(
      *         in="path",
-     *         name="id",
-     *         required=true
+     *         name="idSchool",
+     *         required=true,
+     *     @OA\Schema(
+     *             type="integer"
+     *         )
      *      ),
      *     @OA\Response(
      *         response=200,
-     *         description="Un profesor"
+     *         description="Listado de aulas"
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -66,32 +32,35 @@ class TeacherController extends Controller
      *     )
      *  )
      */
-    public function get($id)
+    public function get($idSchool)
     {
-        $teacher = Teacher::find($id);
+        $teacher = Classroom::bySchool($idSchool)->get();
+        //var_dump($teacher);
         if(!$teacher)
         {
-            return response()->json(['message'=>'No hay profesor'],404);
+            return response()->json(['message'=>'No hay aula para la escuela que busca'],404);
         }
         return response()->json($teacher,200);
     }
     /**
      * @OA\post(
-     *     path="/api/teacher",
-     *     summary="crear un profesor",
-     *     tags={"Profesor"},
+     *     path="/api/classroom",
+     *     summary="crear una aula",
+     *     tags={"Aula"},
      *     @OA\RequestBody(
      *         required=true,
-     *         description="Datos necesarios para crear un profesor",
+     *         description="Datos necesarios para crear una aula",
      *         @OA\JsonContent(
-     *             required={"name", "lastName"},
-     *             @OA\Property(property="name", type="string", example="Gregorio luperon"),
-     *             @OA\Property(property="lastName", type="string", example="Bonaire Encarnacion"),
+     *             required={"name", "chairsAvailable","schoolId","teacherId"},
+     *             @OA\Property(property="name", type="string", example="A1"),
+     *             @OA\Property(property="chairsAvailable", type="interger", example=2),
+     *             @OA\Property(property="schoolId", type="interger", example=1),
+     *             @OA\Property(property="teacherId", type="interger", example=1),
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Crea un profesor"
+     *         description="Crea una aula"
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -101,21 +70,23 @@ class TeacherController extends Controller
      */
     public function create(Request $request)
     {
-       $teacher = Teacher::create([
-            'name' => $request->name,
-            'lastName'=> $request->lastName
-       ]);
-       if(!$teacher)
+        $classroom = Classroom::create([
+                'name' => $request->name,
+                'chairsAvailable'=> $request->chairsAvailable,
+                'school_id'=> $request->schoolId,
+                'teacher_id'=> $request->teacherId
+        ]);
+       if(!$classroom)
        {
            $data = [
-                'message'=> 'Error al crear una profesor',
+                'message'=> 'Error al crear una aula',
                 'status'=> 500
            ];
            return response()->json($data,500);
        }
 
        $data = [
-            'student'=> $teacher,
+            'classroom'=> $classroom,
             'status'=> 201
        ];
 
@@ -124,9 +95,9 @@ class TeacherController extends Controller
     /**
      *   @OA\delete
      *     (
-     *     path="/api/teacher/{id}",
-     *     summary="eliminar un profesor",
-     *     tags={"Profesor"},
+     *     path="/api/classroom/{id}",
+     *     summary="eliminar una aula",
+     *     tags={"Aula"},
      *     @OA\Parameter(
      *         in="path",
      *         name="id",
@@ -144,10 +115,10 @@ class TeacherController extends Controller
      */
     public function delete($id)
     {
-        $teacher = Teacher::find($id);
+        $teacher = Classroom::find($id);
         if(!$teacher)
         {
-            return response()->json(['message'=>'No hay profesor'],404);
+            return response()->json(['message'=>'No hay aula'],404);
         }
         $teacher->delete();
         $data = [
@@ -159,9 +130,9 @@ class TeacherController extends Controller
     /**
      *   @OA\put
      *     (
-     *     path="/api/teacher/{id}",
-     *     summary="actualizar una profesor",
-     *     tags={"Profesor"},
+     *     path="/api/classroom/{id}",
+     *     summary="actualizar una aula",
+     *     tags={"Aula"},
      *     @OA\Parameter(
      *         in="path",
      *         name="id",
@@ -169,7 +140,7 @@ class TeacherController extends Controller
      *      ),
      *      @OA\RequestBody(
      *         required=true,
-     *         description="Datos necesarios para actualizar un profesor",
+     *         description="Datos necesarios para actualizar una aula",
      *         @OA\JsonContent(
      *             required={"name", "lastName"},
      *             @OA\Property(property="name", type="string", example="Jose"),
@@ -178,7 +149,7 @@ class TeacherController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Un profesor"
+     *         description="Una aula"
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -188,11 +159,11 @@ class TeacherController extends Controller
      */
     public function update(Request $request,$id)
     {
-       $teacher = Teacher::findOrFail($id);
+       $teacher = Classroom::findOrFail($id);
      
        if(!$teacher)
        {
-           return response()->json(['No se encontro la profesor']);
+           return response()->json(['No se encontro la aula']);
        }
         
         $teacher->name = $request->name;
@@ -200,7 +171,7 @@ class TeacherController extends Controller
 
         $teacher->save();
         $data = [
-            'profesor'=> $teacher,
+            'aula'=> $teacher,
             'status'=> 200
         ];
         return response()->json($data, 200);

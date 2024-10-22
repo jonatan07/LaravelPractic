@@ -13,14 +13,21 @@ class Classroom extends Model
     protected $fillable = [
         'name',
         'chairsAvailable',
-        'schoolId',
-        'teacherId',
+        'school_id',
+        'teacher_id',
     ];
     public static function scopeName($query,$name)
     {
         if(!empty($name))
         {
             return $query->where('name', 'like', '%' . $name . '%');;
+        }
+    }
+    public static function scopeBySchool($query,$idSchool)
+    {
+        if(!empty($idSchool))
+        {
+            return $query->where('school_id', '=',  $idSchool );
         }
     }
 

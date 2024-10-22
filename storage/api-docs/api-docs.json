@@ -5,6 +5,156 @@
         "version": "2.0"
     },
     "paths": {
+        "/api/classroom/{idSchool}": {
+            "get": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "Obtener las aulas de las escuelas",
+                "operationId": "6dc4deb924c6a8138813d012adf7cdb5",
+                "parameters": [
+                    {
+                        "name": "idSchool",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Listado de aulas"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/classroom": {
+            "post": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "crear una aula",
+                "operationId": "e3e5401fb688e931271f86c66a09ec85",
+                "requestBody": {
+                    "description": "Datos necesarios para crear una aula",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "chairsAvailable",
+                                    "schoolId",
+                                    "teacherId"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "A1"
+                                    },
+                                    "chairsAvailable": {
+                                        "type": "interger",
+                                        "example": 2
+                                    },
+                                    "schoolId": {
+                                        "type": "interger",
+                                        "example": 1
+                                    },
+                                    "teacherId": {
+                                        "type": "interger",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Crea una aula"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/classroom/{id}": {
+            "put": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "actualizar una aula",
+                "operationId": "e72cd2a2a9d0387ecbf6db612af9bb5c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "description": "Datos necesarios para actualizar una aula",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "lastName"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Jose"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": "Encarnacion"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Una aula"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Aula"
+                ],
+                "summary": "eliminar una aula",
+                "operationId": "096cd1a2a4c5a3104931bea41b8635db",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Un Profesor"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
         "/api/school": {
             "get": {
                 "tags": [
@@ -537,6 +687,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Aula",
+            "description": "Aula"
+        },
         {
             "name": "Colegio",
             "description": "Colegio"

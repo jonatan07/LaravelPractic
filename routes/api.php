@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\studentController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ClassroomController;
 
 // Estudiantes
 Route::get('/students',[studentController::class, 'getAll']);
@@ -35,4 +36,12 @@ Route::delete("/teacher/{id}",[TeacherController::class, 'delete']);
 Route::post("/teacher",[TeacherController::class, 'create']);
 
 Route::put("/teacher/{id}",[TeacherController::class, 'update']);
+//Aula
+Route::get("/classroom/{idSchool}",[ClassroomController::class, 'get']);
+
+Route::delete("/classroom/{id}",[ClassroomController::class, 'delete']);
+
+Route::post("/classroom",[ClassroomController::class, 'create']);
+
+Route::put("/classroom/{id}",[ClassroomController::class, 'update']);
 ?>
