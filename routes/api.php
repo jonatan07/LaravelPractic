@@ -5,6 +5,8 @@ use App\Http\Controllers\studentController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Middleware\HandleErrorsMiddleware;
+use Illuminate\Routing\Router;
 
 // Estudiantes
 Route::get('/students',[studentController::class, 'getAll']);
@@ -18,6 +20,8 @@ Route::post("/student",[studentController::class, 'create']);
 Route::put("/student/{id}",[studentController::class, 'update']);
 // Escuela
 Route::get('/school',[SchoolController::class, 'getAll']);
+
+Route::get('/school/classroom/{id}',[SchoolController::class, 'getAllClassroom'])->middleware(HandleErrorsMiddleware::class);
 
 Route::get("/school/{id}",[SchoolController::class, 'get']);
 
@@ -44,4 +48,5 @@ Route::delete("/classroom/{id}",[ClassroomController::class, 'delete']);
 Route::post("/classroom",[ClassroomController::class, 'create']);
 
 Route::put("/classroom/{id}",[ClassroomController::class, 'update']);
+
 ?>

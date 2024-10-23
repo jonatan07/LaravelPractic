@@ -99,23 +99,33 @@
                     }
                 ],
                 "requestBody": {
-                    "description": "Datos necesarios para actualizar una aula",
+                    "description": "Datos necesarios para crear una aula",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
                                     "name",
-                                    "lastName"
+                                    "chairsAvailable",
+                                    "schoolId",
+                                    "teacherId"
                                 ],
                                 "properties": {
                                     "name": {
                                         "type": "string",
-                                        "example": "Jose"
+                                        "example": "A1"
                                     },
-                                    "lastName": {
-                                        "type": "string",
-                                        "example": "Encarnacion"
+                                    "chairsAvailable": {
+                                        "type": "interger",
+                                        "example": 2
+                                    },
+                                    "schoolId": {
+                                        "type": "interger",
+                                        "example": 1
+                                    },
+                                    "teacherId": {
+                                        "type": "interger",
+                                        "example": 1
                                     }
                                 },
                                 "type": "object"
@@ -147,7 +157,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Un Profesor"
+                        "description": "Una Aula"
                     },
                     "default": {
                         "description": "Ha ocurrido un error"
@@ -217,6 +227,30 @@
                 "responses": {
                     "200": {
                         "description": "Crea un estudiante"
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error"
+                    }
+                }
+            }
+        },
+        "/api/school/classroom/{id}": {
+            "get": {
+                "tags": [
+                    "Colegio"
+                ],
+                "summary": "Obtener lista de aulas en el colegio",
+                "operationId": "d810db499a3def7686f63f0dbc90dcf6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Una lista de aulas"
                     },
                     "default": {
                         "description": "Ha ocurrido un error"

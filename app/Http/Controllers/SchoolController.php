@@ -1,8 +1,10 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 use App\Models\School;
+use Exception;
 
 class SchoolController extends Controller
 {
@@ -43,6 +45,57 @@ class SchoolController extends Controller
              return response()->json(['message'=>'No hay escuelas'],404);
          }
          return response()->json($schools,200);
+     }
+    /**
+     *   @OA\get
+     *     (
+     *     path="/api/school/classroom/{id}",
+     *     summary="Obtener lista de aulas en el colegio",
+     *     tags={"Colegio"},
+     *     @OA\Parameter(
+      *         in="path",
+      *         name="id",
+      *         required=true
+      *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Una lista de aulas"
+     *     ),
+     *     @OA\Response(
+     *         response="default",
+     *         description="Ha ocurrido un error"
+     *     )
+     *  )
+    */
+     public function getAllClassroom($id)
+     {
+        //return "hola";
+        /*
+            try{
+        */
+            //throw new Exception("Se jodio");
+            $classrooms = School::find($id)->classroom;
+        /*    
+            }
+            catch(Exception $e)
+            {
+                throw $e;
+                
+                return response() -> json(
+                    [
+                        'success'=> false,
+                        'message'=> 'Ocurrio un error, comuniquese con su Administrador',
+                        'error' => $e->getMessage()
+                    ],500
+                );
+                
+            }
+        */
+        if(!$classrooms)
+        {
+            return response()->json(['message'=>'No hay aulas'],404);
+        }
+         return response()->json($classrooms,200); 
      }
      /**
       *   @OA\get

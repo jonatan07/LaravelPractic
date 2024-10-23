@@ -105,7 +105,7 @@ class ClassroomController extends Controller
      *      ),
      *     @OA\Response(
      *         response=200,
-     *         description="Un Profesor"
+     *         description="Una Aula"
      *     ),
      *     @OA\Response(
      *         response="default",
@@ -122,7 +122,7 @@ class ClassroomController extends Controller
         }
         $teacher->delete();
         $data = [
-            'message' => 'Profesor eliminada',
+            'message' => 'Aula eliminada',
             'status' => 200
         ];
         return response()->json($data,200);
@@ -138,14 +138,16 @@ class ClassroomController extends Controller
      *         name="id",
      *         required=true
      *      ),
-     *      @OA\RequestBody(
+     *     @OA\RequestBody(
      *         required=true,
-     *         description="Datos necesarios para actualizar una aula",
+     *         description="Datos necesarios para crear una aula",
      *         @OA\JsonContent(
-     *             required={"name", "lastName"},
-     *             @OA\Property(property="name", type="string", example="Jose"),
-     *             @OA\Property(property="lastName", type="string", example="Encarnacion"),
-     *             )
+     *             required={"name", "chairsAvailable","schoolId","teacherId"},
+     *             @OA\Property(property="name", type="string", example="A1"),
+     *             @OA\Property(property="chairsAvailable", type="interger", example=2),
+     *             @OA\Property(property="schoolId", type="interger", example=1),
+     *             @OA\Property(property="teacherId", type="interger", example=1),
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -159,19 +161,20 @@ class ClassroomController extends Controller
      */
     public function update(Request $request,$id)
     {
-       $teacher = Classroom::findOrFail($id);
+       $classroom = Classroom::findOrFail($id);
      
-       if(!$teacher)
+       if(!$classroom)
        {
            return response()->json(['No se encontro la aula']);
        }
         
-        $teacher->name = $request->name;
-        $teacher->lastName = $request->lastName;
-
-        $teacher->save();
+        $classroom->name = $request->name;
+        $classroom->chairsAvailable = $request->chairsAvailable;
+        $classroom->school_id = $request->schoolId;
+        $classroom->teacher_id = $request->teacherId;
+        $classroom->save();
         $data = [
-            'aula'=> $teacher,
+            'aula'=> $classroom,
             'status'=> 200
         ];
         return response()->json($data, 200);
