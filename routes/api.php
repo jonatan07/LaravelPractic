@@ -9,44 +9,57 @@ use App\Http\Middleware\HandleErrorsMiddleware;
 use Illuminate\Routing\Router;
 
 // Estudiantes
-Route::get('/students',[studentController::class, 'getAll']);
+Route::controller(studentController::class)->group(function()
+{
 
-Route::get("/student/{id}",[studentController::class, 'get']);
+    Route::get('/students','getAll');
 
-Route::delete("/student/{id}",[studentController::class, 'delete']);
+    Route::get("/student/{id}", 'get');
+    
+    Route::delete("/student/{id}", 'delete');
+    
+    Route::post("/student", 'create');
+    
+    Route::put("/student/{id}",'update');
 
-Route::post("/student",[studentController::class, 'create']);
-
-Route::put("/student/{id}",[studentController::class, 'update']);
+});
 // Escuela
-Route::get('/school',[SchoolController::class, 'getAll']);
+Route::controller(SchoolController::class)->group(function()
+{
+    Route::get('/school','getAll');
 
-Route::get('/school/classroom/{id}',[SchoolController::class, 'getAllClassroom'])->middleware(HandleErrorsMiddleware::class);
+    Route::get('/school/classroom/{id}','getAllClassroom')->middleware(HandleErrorsMiddleware::class);
 
-Route::get("/school/{id}",[SchoolController::class, 'get']);
+    Route::get("/school/{id}",'get');
 
-Route::delete("/school/{id}",[SchoolController::class, 'delete']);
+    Route::delete("/school/{id}",'delete');
 
-Route::post("/school",[SchoolController::class, 'create']);
+    Route::post("/school",'create');
 
-Route::put("/school/{id}",[SchoolController::class, 'update']);
+    Route::put("/school/{id}",'update');
+});
 // Profesor
-Route::get('/teacher',[TeacherController::class, 'getAll']);
+Route::controller(TeacherController::class)->group(function()
+{
+    Route::get('/teacher','getAll');
 
-Route::get("/teacher/{id}",[TeacherController::class, 'get']);
+    Route::get("/teacher/{id}",'get');
 
-Route::delete("/teacher/{id}",[TeacherController::class, 'delete']);
+    Route::delete("/teacher/{id}",'delete');
 
-Route::post("/teacher",[TeacherController::class, 'create']);
+    Route::post("/teacher",'create');
 
-Route::put("/teacher/{id}",[TeacherController::class, 'update']);
+    Route::put("/teacher/{id}",'update');
+});
 //Aula
-Route::get("/classroom/{idSchool}",[ClassroomController::class, 'get']);
+Route::controller(ClassroomController::class)->group(function()
+{
+    Route::get("/classroom/{idSchool}", 'get');
 
-Route::delete("/classroom/{id}",[ClassroomController::class, 'delete']);
+    Route::delete("/classroom/{id}", 'delete');
 
-Route::post("/classroom",[ClassroomController::class, 'create']);
+    Route::post("/classroom", 'create');
 
-Route::put("/classroom/{id}",[ClassroomController::class, 'update']);
-
+    Route::put("/classroom/{id}", 'update');
+});
 ?>
