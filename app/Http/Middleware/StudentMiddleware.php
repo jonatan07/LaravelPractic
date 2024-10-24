@@ -6,7 +6,7 @@ use Closure;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Validators\StudentValidator;
+use App\Http\Validators\StudentValidator;
 
 class StudentMiddleware
 {
@@ -18,14 +18,21 @@ class StudentMiddleware
     public function handle(Request $request,Closure $next)
     {
         try{
-            $result =StudentValidator::Valid($request);
-            if($result['isValid'])
+            if($request->isMethod('post')|$request->isMethod('put')|$request->isMethod('delete'))
             {
-                return $next($request);
+                $result =StudentValidator::Valid($request);
+                if($result['isValid'])
+                {
+                    return $next($request);
+                }
+                else
+                {
+                    return $result;
+                }
             }
             else
             {
-                return $result;
+                return $next($request);
             }
         }
         catch(Exception $e)

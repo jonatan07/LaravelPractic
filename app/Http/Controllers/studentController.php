@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\DTOs\PaginatorDTO;
 use App\Models\Student;
-use App\Validators\StudentValidator;
+use App\Http\DTOS\StudentDTO;
 use Illuminate\Http\Request;
- 
+
 
 class StudentController extends Controller
 {
@@ -49,13 +50,24 @@ class StudentController extends Controller
     public function getAll(Request $request)
     {
 
-        $students =Student::name($request->name)->lastName($request->lastName)->email($request->email)->phone($request->phone)->get();
-        
-        if($students->isEmpty())
+        $studentsFilter =Student::name($request->name)->lastName($request->lastName)->email($request->email)->phone($request->phone)->paginate(15);
+        $students = array();
+        foreach($studentsFilter->items() as $student)
+        {
+            array_push($students,StudentDTO::fromModel($student));
+        }
+        $result = PaginatorDTO::Pagination($students,
+                                           $studentsFilter->currentPage(),
+                                           $studentsFilter->perPage(),
+                                           $studentsFilter->total(),
+                                           $studentsFilter->lastPage());
+                                        
+        if(empty($students))
         {
             return response()->json(['message'=>'No hay estudiantes'],404);
         }
-        return response()->json($students,200);
+        
+        return response()->json($result,200);
     }
     /**
      *   @OA\get
@@ -85,7 +97,8 @@ class StudentController extends Controller
         {
             return response()->json(['message'=>'No hay estudiantes'],404);
         }
-        return response()->json($student,200);
+        $response = StudentDTO::fromModel($student);
+        return response()->json($response,200);
     }
     /**
      *   @OA\post
@@ -117,18 +130,6 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
-
-        //$rule = StudentValidator::Valid($request);
-        /*
-        if(!$rule['isValid'])
-        {
-            $data = [
-                'error'=> $rule['error'],
-                'status'=> 422
-            ];
-            return response()->json($data,422);
-        }
-        */
         $student = Student::create([
             'name' => $request->name,
             'lastName'=> $request->lastName,
@@ -145,9 +146,9 @@ class StudentController extends Controller
             ];
             return response()->json($data,500);
         }
-
+        $response = StudentDTO::fromModel($student);
         $data = [
-            'student'=> $student,
+            'student'=> $response,
             'status'=> 201
         ];
 
@@ -235,8 +236,9 @@ class StudentController extends Controller
         $student->phone = $request->phone;
         $student->address = $request->address;
         $student->save();
+        $response = StudentDTO::fromModel($student);
         $data = [
-            'student'=> $student,
+            'student'=> $response,
             'status'=> 200
         ];
         return response()->json($data, 200);

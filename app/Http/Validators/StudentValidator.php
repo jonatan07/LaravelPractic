@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Validators;
+namespace App\Http\Validators;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +16,7 @@ class StudentValidator
         $validator = Validator::make($request->all(),[
             'name' => 'required|min:3',
             'email' => 'required|email',
-            'lastName' => 'required|4',
+            'lastName' => 'required|min:4',
             'phone' => 'required|min:10|max:12',
         ]);
 
