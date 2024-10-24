@@ -5,11 +5,11 @@ use App\Http\Controllers\studentController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ClassroomController;
-use App\Http\Middleware\HandleErrorsMiddleware;
+use App\Http\Middleware\StudentMiddleware;
 use Illuminate\Routing\Router;
 
 // Estudiantes
-Route::controller(studentController::class)->group(function()
+Route::controller(studentController::class)->middleware(StudentMiddleware::class)->group(function()
 {
 
     Route::get('/students','getAll');
@@ -28,7 +28,7 @@ Route::controller(SchoolController::class)->group(function()
 {
     Route::get('/school','getAll');
 
-    Route::get('/school/classroom/{id}','getAllClassroom')->middleware(HandleErrorsMiddleware::class);
+    Route::get('/school/classroom/{id}','getAllClassroom');
 
     Route::get("/school/{id}",'get');
 

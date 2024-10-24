@@ -14,10 +14,10 @@ class StudentValidator
             'error' => ''
         ];
         $validator = Validator::make($request->all(),[
-            'name' => 'required',
+            'name' => 'required|min:3',
             'email' => 'required|email',
-            'lastName' => 'required',
-            'phone' => 'required',
+            'lastName' => 'required|4',
+            'phone' => 'required|min:10|max:12',
         ]);
 
         if($validator->fails())

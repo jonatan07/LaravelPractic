@@ -69,7 +69,7 @@ class SchoolController extends Controller
     */
      public function getAllClassroom($id)
      {
-        //return "hola";
+        
         /*
             try{
         */

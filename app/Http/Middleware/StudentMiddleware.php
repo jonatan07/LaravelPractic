@@ -6,8 +6,9 @@ use Closure;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Validators\StudentValidator;
 
-class HandleErrorsMiddleware
+class StudentMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,11 +17,16 @@ class HandleErrorsMiddleware
      */
     public function handle(Request $request,Closure $next)
     {
-       
         try{
-
-            //var_dump("Ejecutando el middeware");
-            return $next($request);
+            $result =StudentValidator::Valid($request);
+            if($result['isValid'])
+            {
+                return $next($request);
+            }
+            else
+            {
+                return $result;
+            }
         }
         catch(Exception $e)
         {

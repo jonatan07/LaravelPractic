@@ -118,8 +118,8 @@ class StudentController extends Controller
     public function create(Request $request)
     {
 
-        $rule = StudentValidator::Valid($request);
-        
+        //$rule = StudentValidator::Valid($request);
+        /*
         if(!$rule['isValid'])
         {
             $data = [
@@ -128,7 +128,7 @@ class StudentController extends Controller
             ];
             return response()->json($data,422);
         }
-
+        */
         $student = Student::create([
             'name' => $request->name,
             'lastName'=> $request->lastName,
