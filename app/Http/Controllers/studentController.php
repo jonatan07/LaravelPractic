@@ -17,7 +17,7 @@ class StudentController extends Controller
      *     (
      *     path="/api/students",
      *     summary="Obtener lista de estudiantes",
-     *     security={{"passport": {}}},
+     *     security={{"token": {}}},
      *     tags={"Estudiante"},
      *     @OA\Parameter(
      *         in="query",
@@ -87,6 +87,7 @@ class StudentController extends Controller
      *     (
      *     path="/api/student/{id}",
      *     summary="Obtener un estudiante",
+     *     security={{"token": {}}},
      *     tags={"Estudiante"},
      *     @OA\Parameter(
      *         in="path",
@@ -118,6 +119,7 @@ class StudentController extends Controller
      *     (
      *     path="/api/student",
      *     summary="crear un estudiante",
+     *     security={{"token": {}}},
      *     tags={"Estudiante"},
      *     @OA\RequestBody(
      *         required=true,
@@ -172,6 +174,7 @@ class StudentController extends Controller
      *     (
      *     path="/api/student/{id}",
      *     summary="eliminar un estudiante",
+     *     security={{"token": {}}},
      *     tags={"Estudiante"},
      *     @OA\Parameter(
      *         in="path",
@@ -207,6 +210,7 @@ class StudentController extends Controller
      *     (
      *     path="/api/student/{id}",
      *     summary="actualizar un estudiante",
+     *     security={{"token": {}}},
      *     tags={"Estudiante"},
      *     @OA\Parameter(
      *         in="path",

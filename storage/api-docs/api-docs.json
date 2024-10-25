@@ -482,7 +482,7 @@
                 },
                 "security": [
                     {
-                        "passport": []
+                        "token": []
                     }
                 ]
             }
@@ -508,7 +508,12 @@
                     "default": {
                         "description": "Ha ocurrido un error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -571,7 +576,12 @@
                     "default": {
                         "description": "Ha ocurrido un error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -593,7 +603,12 @@
                     "default": {
                         "description": "Ha ocurrido un error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
             }
         },
         "/api/student": {
@@ -651,7 +666,12 @@
                     "default": {
                         "description": "Ha ocurrido un error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "token": []
+                    }
+                ]
             }
         },
         "/api/teacher": {

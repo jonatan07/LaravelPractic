@@ -6,6 +6,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AuthController;
 use App\Http\Middleware\StudentMiddleware;
+use Illuminate\Routing\Router;
 
 // Auth
 Route::controller(AuthController::class)->group(function(){
@@ -15,7 +16,7 @@ Route::controller(AuthController::class)->group(function(){
 });
 
 // Estudiantes
-Route::controller(studentController::class)->middleware(['auth:api',StudentMiddleware::class])->group(function()
+Route::controller(studentController::class)->middleware(['auth:api'])->group(function()
 {
 
     Route::get('/students','getAll');
@@ -67,5 +68,12 @@ Route::controller(ClassroomController::class)->group(function()
     Route::post("/classroom", 'create');
 
     Route::put("/classroom/{id}", 'update');
+});
+
+Route::fallback(function(){
+    return response()->json([
+        'status'=>'error',
+        'message'=> 'Incorrect Route or not logged'
+    ],404);
 });
 ?>
