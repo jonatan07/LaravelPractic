@@ -6,6 +6,8 @@ use App\Http\DTOs\PaginatorDTO;
 use App\Models\Student;
 use App\Http\DTOS\StudentDTO;
 use Illuminate\Http\Request;
+use Exception;
+
 
 
 class StudentController extends Controller
@@ -15,6 +17,7 @@ class StudentController extends Controller
      *     (
      *     path="/api/students",
      *     summary="Obtener lista de estudiantes",
+     *     security={{"passport": {}}},
      *     tags={"Estudiante"},
      *     @OA\Parameter(
      *         in="query",
@@ -49,7 +52,7 @@ class StudentController extends Controller
 
     public function getAll(Request $request)
     {
-
+        try{
         $studentsFilter =Student::name($request->name)->lastName($request->lastName)->email($request->email)->phone($request->phone)->paginate(15);
         $students = array();
         foreach($studentsFilter->items() as $student)
@@ -61,7 +64,17 @@ class StudentController extends Controller
                                            $studentsFilter->perPage(),
                                            $studentsFilter->total(),
                                            $studentsFilter->lastPage());
-                                        
+        }
+        catch(Exception $e)
+        {
+            return response() -> json(
+                [
+                    'success'=> false,
+                    'message'=> 'Ocurrio un error, comuniquese con su Administrador',
+                    'error' => $e->getMessage()
+                ],500
+            );
+        }                         
         if(empty($students))
         {
             return response()->json(['message'=>'No hay estudiantes'],404);
