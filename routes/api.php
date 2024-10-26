@@ -16,7 +16,7 @@ Route::controller(AuthController::class)->group(function(){
 });
 
 // Estudiantes
-Route::controller(studentController::class)->middleware(['auth:api'])->group(function()
+Route::controller(studentController::class)->middleware(['auth:api',StudentMiddleware::class])->group(function()
 {
 
     Route::get('/students','getAll');

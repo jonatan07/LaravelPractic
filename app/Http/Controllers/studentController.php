@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\DTOs\PaginatorDTO;
 use App\Models\Student;
 use App\Http\DTOS\StudentDTO;
+use App\Http\Resources\StudentResource;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -53,17 +54,8 @@ class StudentController extends Controller
     public function getAll(Request $request)
     {
         try{
-        $studentsFilter =Student::name($request->name)->lastName($request->lastName)->email($request->email)->phone($request->phone)->paginate(15);
-        $students = array();
-        foreach($studentsFilter->items() as $student)
-        {
-            array_push($students,StudentDTO::fromModel($student));
-        }
-        $result = PaginatorDTO::Pagination($students,
-                                           $studentsFilter->currentPage(),
-                                           $studentsFilter->perPage(),
-                                           $studentsFilter->total(),
-                                           $studentsFilter->lastPage());
+            $data =Student::name($request->name)->lastName($request->lastName)->email($request->email)->phone($request->phone)->paginate(15);
+            $students = StudentResource::collection($data);
         }
         catch(Exception $e)
         {
@@ -80,7 +72,7 @@ class StudentController extends Controller
             return response()->json(['message'=>'No hay estudiantes'],404);
         }
         
-        return response()->json($result,200);
+        return response()->json($students,200);
     }
     /**
      *   @OA\get
@@ -111,7 +103,7 @@ class StudentController extends Controller
         {
             return response()->json(['message'=>'No hay estudiantes'],404);
         }
-        $response = StudentDTO::fromModel($student);
+        $response = new StudentResource($student);
         return response()->json($response,200);
     }
     /**

@@ -18,7 +18,7 @@ class StudentMiddleware
     public function handle(Request $request,Closure $next)
     {
         try{
-            if($request->isMethod('post')|$request->isMethod('put')|$request->isMethod('delete'))
+            if($request->isMethod('post')|$request->isMethod('put'))
             {
                 $result =StudentValidator::Valid($request);
                 if($result['isValid'])
