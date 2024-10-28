@@ -60,19 +60,22 @@ class StudentController extends Controller
         catch(Exception $e)
         {
             return response() -> json(
-                [
-                    'success'=> false,
-                    'message'=> 'Ocurrio un error, comuniquese con su Administrador',
-                    'error' => $e->getMessage()
-                ],500
+                $this->ErrorResponse($e->getMessage())
+                ,500
             );
+            
         }                         
         if(empty($students))
         {
             return response()->json(['message'=>'No hay estudiantes'],404);
         }
         
-        return response()->json($students,200);
+        return $this->successfullCollectionResponse(
+            $students,
+            $data->total(),
+            $data->currentPage(),
+            $data->lastPage()
+        );
     }
     /**
      *   @OA\get
@@ -104,7 +107,7 @@ class StudentController extends Controller
             return response()->json(['message'=>'No hay estudiantes'],404);
         }
         $response = new StudentResource($student);
-        return response()->json($response,200);
+        return $this->successfullResponse($response,"Estudiante encontrado");
     }
     /**
      *   @OA\post
@@ -137,29 +140,24 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
-        $student = Student::create([
-            'name' => $request->name,
-            'lastName'=> $request->lastName,
-            'email'=> $request->email,
-            'phone'=> $request->phone,
-            'address'=> $request->address
-        ]);
+        try{
+            $student = Student::create([
+                'name' => $request->name,
+                'lastName'=> $request->lastName,
+                'email'=> $request->email,
+                'phone'=> $request->phone,
+                'address'=> $request->address
+            ]);
 
-        if(!$student)
-        {
-            $data = [
-                'message'=> 'Error al crear el estudiante',
-                'status'=> 500
-            ];
-            return response()->json($data,500);
+            return $this->successfullResponse(new StudentResource($student),201);
         }
-        $response = StudentDTO::fromModel($student);
-        $data = [
-            'student'=> $response,
-            'status'=> 201
-        ];
-
-        return response()->json($data,201);
+        catch(Exception $ex)
+        {
+            return response() -> json(
+                $this->ErrorResponse($ex->getMessage())
+                ,500
+            );
+        }
     }
     /**
      *   @OA\delete
@@ -185,17 +183,22 @@ class StudentController extends Controller
      */
     public function delete($id)
     {
-        $student = Student::find($id);
-        if(!$student)
-        {
-            return response()->json(['message'=>'No hay estudiantes'],404);
+        try{
+            $student = Student::find($id);
+            if(!$student)
+            {
+                return response()->json(['message'=>'No hay estudiantes'],404);
+            }
+            $student->delete();
+            return $this->successfullResponse(new StudentResource ($student),'Estudiante eliminado');
         }
-        $student->delete();
-        $data = [
-            'message' => 'Estudiante eliminado',
-            'status' => 200
-        ];
-        return response()->json($data,200);
+        catch(Exception $ex)
+        {
+            return response() -> json(
+                $this->ErrorResponse($ex->getMessage())
+                ,500
+            );
+        }
     }
     /**
      *   @OA\put
@@ -233,23 +236,28 @@ class StudentController extends Controller
      */
     public function update(Request $request,$id)
     {
-        
-        $student = Student::findOrFail($id);
-        if(!$student)
+        try
         {
-            return response()->json(['No se encontro al estudiante']);
+            $student = Student::findOrFail($id);
+            if(!$student)
+            {
+                return response()->json(['No se encontro al estudiante']);
+            }
+            $student->name = $request->name;
+            $student->lastName = $request->lastName;
+            $student->email = $request->email;
+            $student->phone = $request->phone;
+            $student->address = $request->address;
+            $student->save();
+        
+            return $this->successfullResponse(new StudentResource ($student),'Estudiante actualizado');
         }
-        $student->name = $request->name;
-        $student->lastName = $request->lastName;
-        $student->email = $request->email;
-        $student->phone = $request->phone;
-        $student->address = $request->address;
-        $student->save();
-        $response = StudentDTO::fromModel($student);
-        $data = [
-            'student'=> $response,
-            'status'=> 200
-        ];
-        return response()->json($data, 200);
+        catch(Exception $ex)
+        {
+            return response() -> json(
+                $this->ErrorResponse($ex->getMessage())
+                ,500
+            );
+        }
     }
 }

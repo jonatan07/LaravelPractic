@@ -18,4 +18,31 @@ namespace App\Http\Controllers;
 */
 abstract class Controller
 {
+    protected function successfullResponse($data,$message,$code=200)
+    {
+        $response = [
+            'data' =>$data,
+            'message'=>$message
+        ];
+        return response()->json($response,$code);
+    }
+    protected function successfullCollectionResponse($data,$total,$currentPage,$lastPage)
+    {
+        $response = [
+            'data' =>$data,
+            'total'=>$total,
+            'currentPage'=>$currentPage,
+            'lastPage'=>$lastPage
+           
+        ];
+        return response()->json($response,200);
+    }
+    protected function ErrorResponse($description)
+    {
+        $response = [
+            'message'=> 'Ocurrio un error, comuniquese con su Administrador',
+            'Description' =>$description,
+        ];
+        return $response;
+    }
 }
