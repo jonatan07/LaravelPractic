@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\DTOs\PaginatorDTO;
 use App\Models\Student;
-use App\Http\DTOS\StudentDTO;
 use App\Http\Resources\StudentResource;
+use App\Notifications\studendCreated;
 use Illuminate\Http\Request;
 use Exception;
-
-
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
@@ -148,7 +146,11 @@ class StudentController extends Controller
                 'phone'=> $request->phone,
                 'address'=> $request->address
             ]);
-
+            $data =[
+                'id'=>$student->id
+            ];
+            //Mail::to('jonatandelgadovaldez@gmail.com')->send(new studendCreated($data));
+            $student->notify(new studendCreated($data));
             return $this->successfullResponse(new StudentResource($student),201);
         }
         catch(Exception $ex)
